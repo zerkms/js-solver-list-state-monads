@@ -4,7 +4,7 @@ The implementation and idea are inspired by the following amazing articles:
 
 * [Using Monads in C++ to Solve Constraints: 1. The List Monad](http://bartoszmilewski.com/2015/05/11/using-monads-in-c-to-solve-constraints-1-the-list-monad/)
 * [Using Monads in C++ to Solve Constraints: 2. The State Monad](http://bartoszmilewski.com/2015/05/14/using-monads-in-c-to-solve-constraints-2-the-state-monad/)
-* [http://bartoszmilewski.com/2015/05/18/using-monads-in-c-to-solve-constraints-3-the-tale-of-two-monads/](http://bartoszmilewski.com/2015/05/18/using-monads-in-c-to-solve-constraints-3-the-tale-of-two-monads/)
+* [Using Monads in C++ to Solve Constraints: 3. The Tale of Two Monads](http://bartoszmilewski.com/2015/05/18/using-monads-in-c-to-solve-constraints-3-the-tale-of-two-monads/)
 * [Unique sample drawing & searches with List and StateT — “Send more money”](http://blog.jle.im/entry/unique-sample-drawing-searches-with-list-and-statet)
 * [The State Monad: A Tutorial for the Confused?](http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/)
 
