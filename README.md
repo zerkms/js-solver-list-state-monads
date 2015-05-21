@@ -36,6 +36,6 @@ On my machine the output looks like
     Solutions found:
     [ [ 9567, 1085, 10652 ] ]
     
-    real    0m22.239s
-    user    0m19.401s
-    sys     0m2.673s
+    real    0m15.593s
+    user    0m15.093s
+    sys     0m0.423s
