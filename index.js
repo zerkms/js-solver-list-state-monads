@@ -17,27 +17,25 @@ const select = list => {
 let asNumber = lst => lst.reduce((acc, i) => acc * 10 + i, 0);
 
 function solve(progress) {
-    return m_.bind(select, s => {
+    return m_.bind(select, s => { return m_.then(m_.guard(s != 0), () => {
     return m_.bind(select, e => {
     return m_.bind(select, n => {
     return m_.bind(select, d => {
-    return m_.bind(select, m => {
+    return m_.bind(select, m => { return m_.then(m_.guard(m != 0), () => {
     return m_.bind(select, o => {
     return m_.bind(select, r => {
     return m_.bind(select, y => {
         let done = s * 10 + e;
         progress(done);
 
-        return m_.then(m_.guard(s != 0 && m != 0), () => {
-            let send = asNumber([s, e, n, d]),
-                more = asNumber([m, o, r, e]),
-                money = asNumber([m, o, n, e, y]);
+        let send = asNumber([s, e, n, d]),
+            more = asNumber([m, o, r, e]),
+            money = asNumber([m, o, n, e, y]);
 
-            return m_.then(m_.guard(send + more == money), () => {
-                return m_._return([send, more, money]);
-            });
+        return m_.then(m_.guard(send + more == money), () => {
+            return m_._return([send, more, money]);
         });
-    }); }); }); }); }); }); }) });
+    }); }); }); }); }); }); }) }); }); });
 }
 
 let progress = () => {
