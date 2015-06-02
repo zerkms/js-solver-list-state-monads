@@ -14,41 +14,55 @@ const select = list => {
     return head.concat(tail);
 };
 
-let asNumber = lst => lst.reduce((acc, i) => acc * 10 + i, 0);
+const asNumber = lst => lst.reduce((acc, i) => acc * 10 + i, 0);
+const isFirstLetter = letter => str => str[0] === letter;
+const numberFromState = (str, state) => asNumber(str.split('').map(v => state[v]));
+const uniqueLetters = arr => m_.nub(m_.flatten(arr.map(v => v.split(''))));
 
-function solve(progress) {
-    return m_.bind(select, s => { return m_.then(m_.guard(s != 0), () => {
-    return m_.bind(select, e => {
-    return m_.bind(select, n => {
-    return m_.bind(select, d => {
-    return m_.bind(select, m => { return m_.then(m_.guard(m != 0), () => {
-    return m_.bind(select, o => {
-    return m_.bind(select, r => {
-    return m_.bind(select, y => {
-        let done = s * 10 + e;
-        progress(done);
+const constraintFirstLetter = (letter, state, eq, bind) => {
+    let isFirst = isFirstLetter(letter),
+        br = (isFirst(eq.a) || isFirst(eq.b) || isFirst(eq.sum)) && state[letter] == 0;
 
-        let send = asNumber([s, e, n, d]),
-            more = asNumber([m, o, r, e]),
-            money = asNumber([m, o, n, e, y]);
-
-        return m_.then(m_.guard(send + more == money), () => {
-            return m_._return([send, more, money]);
-        });
-    }); }); }); }); }); }); }) }); }); });
-}
-
-let progress = () => {
-    let lastShown;
-
-    return p => {
-        if (p % 10 === 0 && lastShown != p) {
-            lastShown = p;
-            console.log(`${p}%`)
-        }
-    }
+    return m_.then(m_.guard(!br), bind);
 };
-let solutions = m_.evalStateList(solve(progress()), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+const constraintSumLength = (letter, state, eq, bind) => {
+    let br = eq.sum[0] == letter && eq.sum.length > Math.max(eq.a.length, eq.b.length) && state[eq.sum[0]] != 1;
+    return m_.then(m_.guard(!br), bind);
+};
+
+const constraint = (letter, state, eq, bind) => {
+    return [constraintSumLength, constraintFirstLetter].reduce(
+        (acc, v) => () => v(letter, state, eq, acc),
+        bind
+    )();
+};
+
+const go = (rest, state, i, eq) => {
+    let [head, ...tail] = rest,
+        newState = m_.clone(state);
+    newState[head] = i;
+
+    if (tail.length === 0) {
+        return prune(eq, newState);
+    }
+
+    return constraint(head, newState, eq, () => m_.bind(select, x => go(tail, newState, x, eq)));
+};
+
+const prune = (eq, state) => {
+    let a = numberFromState(eq.a, state),
+        b = numberFromState(eq.b, state),
+        sum = numberFromState(eq.sum, state);
+
+    return m_.then(m_.guard(a + b == sum), () => {
+        return m_._return([a, b, sum]);
+    });
+};
+
+const solve = (a, b, sum) => m_.bind(select, s => go(uniqueLetters([a, b, sum]), {}, s, {a, b, sum}));
+
+let solutions = m_.evalStateList(solve('send', 'more', 'money'), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 console.log('Solutions found: ');
 console.log(solutions);

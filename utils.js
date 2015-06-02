@@ -7,6 +7,10 @@ export const evalStateList = (st, s) => st(s).map(p => p.first);
 
 export const _return = a => s => ({first: a, second: s});
 
+export const flatten = list => Array.prototype.concat.apply([], list);
+
+export const nub = arr => arr.filter((v, i, self) => self.indexOf(v) === i);
+
 export const bind = (g, k) => {
     return s => {
         let plst = g(s);
@@ -18,7 +22,7 @@ export const bind = (g, k) => {
             return result;
         }, plst);
 
-        return Array.prototype.concat.apply([], lst2);
+        return flatten(lst2);
     };
 };
 
@@ -32,7 +36,7 @@ export const then = (g, k) => {
             return result;
         }, plst);
 
-        return Array.prototype.concat.apply([], lst2);
+        return flatten(lst2);
     };
 };
 
@@ -44,4 +48,13 @@ export const guard = b => {
     } else {
         return zero();
     }
+};
+
+export const clone = obj => {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
 };
