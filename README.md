@@ -9,6 +9,18 @@ The implementation and idea are inspired by the following amazing articles:
 * [Unique sample drawing & searches with List and StateT — “Send more money”](http://blog.jle.im/entry/unique-sample-drawing-searches-with-list-and-statet)
 * [The State Monad: A Tutorial for the Confused?](http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/)
 
+Overview
+--------
+
+The program basically solves the following
+
+       send
+    +  more
+     ------
+      money
+      
+equation where every letter represents a distinct digit.
+
 How to run
 ----------
 
